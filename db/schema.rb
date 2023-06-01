@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_01_074638) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_01_095847) do
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.float "price"
@@ -29,6 +29,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_074638) do
     t.string "customer_name"
     t.float "total"
     t.boolean "completed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

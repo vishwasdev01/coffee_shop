@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :authorize_request
 
   def index
     orders = Order.all
@@ -16,7 +17,9 @@ class OrdersController < ApplicationController
 
   def create
     order = build_order
-    if order.save
+    if order.nil?
+      render json: { error: "Item not found." }, status: :unprocessable_entity
+    elsif order.save
       render json: order, status: :created
     else
       render json: order.errors, status: :unprocessable_entity
@@ -54,18 +57,18 @@ class OrdersController < ApplicationController
 
   def build_order
     order = Order.new(order_params)
+    item_names = params[:item_names]
     items = []
     total = 0.0
 
     item_names.each do |name|
       item = Item.find_by(name: name)
       if item.nil?
-        order.errors.add(:base, "Item '#{name}' not found.")
-        return order
+        return
+      else
+        items << item
+        total += calculate_item_total(item)
       end
-
-      items << item
-      total += calculate_item_total(item)
     end
 
     order.items << items if items.present?

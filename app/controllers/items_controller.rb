@@ -1,12 +1,13 @@
 class ItemsController < ApplicationController
-
+  before_action :authorize_request
+  
 	def index
     items = Item.all
     render json: items
   end
 
   def show
-    item = Item.find(params[:id])
+    item = Item.find_by(id: params[:id])
     if item.present?
 	    render json: item
 	  else
