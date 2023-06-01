@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_name: MyString
+  total: 1.5
+  completed: false
+
+two:
+  customer_name: MyString
+  total: 1.5
+  completed: false
