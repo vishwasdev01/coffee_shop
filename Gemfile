@@ -73,3 +73,7 @@ end
 
 gem 'byebug'
 gem 'jwt'
+gem 'rubocop'
+gem "rails_best_practices"
+gem 'rspec-rails'
+gem 'rails-controller-testing'
