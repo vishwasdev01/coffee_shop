@@ -36,6 +36,7 @@ RSpec.describe ItemsController, type: :controller do
     context 'with valid parameters' do
       let(:params) { { item: {  name: 'Item 1', price: 10.0, tax_rate: 5.0, discount: false  } } }
       it 'creates a new item' do
+        expect(controller).to receive(:authorize_request)
         post :create, params: params    
         expect(response).to have_http_status(:created)
       end

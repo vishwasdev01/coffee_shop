@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
-  # let(:user) { User.create(email: "abc@gmail.com", password: "123456") }
-  # let(:token) {JsonWebToken.encode(user_id: user.id)}
-
   describe 'GET #index' do
     it 'returns a JSON response with all orders' do
       order = Order.create(customer_name: "vish")  
@@ -35,7 +32,7 @@ RSpec.describe OrdersController, type: :controller do
       let(:params) { { order: { customer_name: "Vish"}, item_names: ["Item 1"] } }
       
       it 'creates a new item' do
-        # post :create, params: { params: params, token: token }  
+        expect(controller).to receive(:authorize_request)
         post :create, params: params
         expect(response).to have_http_status(:created)
       end
@@ -46,8 +43,8 @@ RSpec.describe OrdersController, type: :controller do
       let(:params) { { order: { customer_name: "Vish"}, item_names: ["A"] } }
       
       it 'returns a JSON response with an error message' do
+        expect(controller).to receive(:authorize_request)
         post :create, params: params
-        # post :create, params: { params: params, token: token } 
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

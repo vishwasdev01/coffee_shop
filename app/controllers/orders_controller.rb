@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authorize_request
+  before_action :authorize_request, only: [:create, :update]
 
   def index
     orders = Order.all
@@ -28,10 +28,11 @@ class OrdersController < ApplicationController
 
   def update
     order = find_order_by_id
-    if order.update(completed: true)
-      render json: order
+    if order.nil?
+      render json: { error: "Item not found." }, status: :unprocessable_entity
     else
-      render json: order.errors, status: :unprocessable_entity
+      order.update(completed: true)
+      render json: order
     end
   end
 
